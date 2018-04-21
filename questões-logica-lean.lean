@@ -106,20 +106,16 @@ show (∃y,R y) ↔ (∃z, S z), from iff.intro
 section
     variable U : Type
     variable P : U → Prop
-    variable h1 : ∀ x, ∃ y, P y → P x
-    variable x : U
 
-    example : ∀ x, ∀ y, P y → P x :=
-    
-    have h2 : ∃ y, P y → P x, from h1 x,
-    exists.elim h2 (
-        assume (y : U) (hy : P y → P x),
-        have h3 : ∀ y, P y → P x, from (
-            assume z,
-            show P z → P x, from sorry
-        ),
-        show ∀ x, ∀ y, P y → P x, from sorry
-    )
+    example (h1 : ∀ x,((∃ y, P y) → P x)) : ∀ x, ∀ y,( P y → P x) :=
+    assume a,
+    assume b, 
+    assume h2: P b,
+    have h3: (∃ b, P b) → P a, from h1 a ,
+    have h4: ∃ b, P b, from exists.intro b h2,
+    have h5: P a, from h3 h4 , 
+    show P a, from h5
+  
 end
 
 13 fol - 
