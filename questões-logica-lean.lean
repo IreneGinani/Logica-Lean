@@ -1,4 +1,9 @@
-62 - variables A B: Prop
+
+section 
+
+-- Questao 62 Logica proposicional : LCP-62 ¬A → B, ¬B ⊢ A
+
+variables A B: Prop
 
 open classical
 
@@ -8,10 +13,15 @@ example (h1: ¬ A → B) (h2: ¬ B) : A :=
         have h4: B,
             from h1 h3,
         show false,
-            from h2 h4)	
+            from h2 h4) 
 
+end
 
-65 - variables A B: Prop
+section
+
+-- Questao 65 Logica proposicional : LCP-65  ¬(A∧B), B ⊢ ¬A
+
+variables A B: Prop
 
 
 example (h1: ¬ (A ∧ B)) (h2:  B) : ¬ A :=
@@ -21,7 +31,11 @@ example (h1: ¬ (A ∧ B)) (h2:  B) : ¬ A :=
         show false,
             from h1 h4
 
-35 - 
+end
+
+section 
+
+-- Questao 35 Logica proposicional : LCP­35: (A→B) ⊢ ((C∨A)→(B∨C))
 
 variables A B C : Prop
 
@@ -33,13 +47,15 @@ example (h1: A → B) : ((C∨A)→(B∨C)) :=
         (assume h4: A,
         show B ∨ C, from or.inl (h1 h4))
 
-99 - 
+end 
+
+
+section 
+
+-- Questao 99 Logica proposicional : LCP-99 ¬(¬A∧B∧¬C), B ⊢ (A∨C)
 
 open classical
 variables {A B C : Prop}
-
--- Prove ¬ (A ∧ B) → ¬ A ∨ ¬ B by replacing the sorry's below
--- by proofs.
 
 lemma step1 (h1 : ¬ (A ∨ B)) (h2 : ¬ A) : ¬ A ∧ ¬ B :=
 have h5: ¬ B, from (
@@ -77,9 +93,11 @@ example (h1: ¬(¬A ∧ B ∧ ¬C)) (h2:  B) : A ∨ C :=
         from h1 h4
     )
 
+end
 
+section
 
-28 fol -
+-- Questao 28 Logica de primeira ordem  :  ∀x,(R(x)↔S(x)) ⊢ ∃y,R(y)↔∃z,S(z)
 
 variable U : Type
 variable R : U → Prop
@@ -101,9 +119,12 @@ show (∃y,R y) ↔ (∃z, S z), from iff.intro
     have h4: R x, from iff.elim_right h3 hy,
     show ∃z ,R z, from exists.intro x h4))
 
-47 fol - 
+end 
 
 section
+
+-- Questao 47 Logica de primeira ordem  :  ∀x.(∃y.P(y)→P(x)) ⊢ ∀x.∀y.(P(y)→P(x))
+   
     variable U : Type
     variable P : U → Prop
 
@@ -118,7 +139,9 @@ section
   
 end
 
-13 fol - 
+section
+
+-- Questao 13 Logica de primeira ordem  :   ∀x.(P(x)↔Q) ⊢ (∀x.P(x))↔Q
 
 variables U Q: Prop
 variable P : U → Prop
@@ -137,8 +160,11 @@ show (∀ x,P x ) ↔ Q, from iff.intro
     have h4: P x, from iff.elim_right h3 h,
     show P y  , from h4)
 
+end
 
-31 fol - 
+section
+
+-- Questao 13 Logica de primeira ordem : LCPO31   P(i) ⊢ ¬∀x.¬P(x)
 
 variable U: Prop
 variable P : U → Prop
@@ -156,14 +182,14 @@ variables i x: U
 -- END
 
 
--- LCPO31   P(i) ⊢ ¬∀x.¬P(x)
 
+end
 
-desafio 773 - refazer
+section
+
+-- Questao 773 dos desafios : ⊢ (((A → B) → ((⊥ → C) → D)) → ((D → A) → (E → (F → A))))
 
 variables A B C D E F: Prop
-
-variable h: false
 
 example: (((A → B) → ((false → C) → D)) → ((D → A) → (E → (F → A))))  :=
     show (((A → B) → ((false → C) → D)) → ((D → A) → (E → (F → A)))), from 
@@ -171,10 +197,14 @@ example: (((A → B) → ((false → C) → D)) → ((D → A) → (E → (F →
     show ((D → A) → (E → (F → A))), from 
     (assume h2: (D → A), show  (E → (F → A)), from 
     (assume h3: E, show (F → A), from 
-    (assume h4: F, show A, from false.elim h))))
+    (assume h4: F, show A, from sorry))))
 
 
-desafio 386 -
+end
+
+section
+
+-- Questao 386 dos desafios : ((A → B) ∧ (C → D)), ((B ∨ D) → E), (¬E) ⊢ ¬(A ∨ C)
 
 variables A B C D E: Prop
 
@@ -199,4 +229,5 @@ example (h1: (A → B) ∧ (C → D)) (h2: (B ∨ D) → E) (h4: ¬E ): ¬(A ∨
         )
     )
 
+end
 
