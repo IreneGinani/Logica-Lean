@@ -189,17 +189,42 @@ section
 
 -- Questao 773 dos desafios : ⊢ (((A → B) → ((⊥ → C) → D)) → ((D → A) → (E → (F → A))))
 
+open classical
+
 variables A B C D E F: Prop
 
-example: (((A → B) → ((false → C) → D)) → ((D → A) → (E → (F → A))))  :=
+example: ((A → B) → ((false → C) → D)) → ((D → A) → (E → (F → A)))  :=
     show (((A → B) → ((false → C) → D)) → ((D → A) → (E → (F → A)))), from 
-    (assume h1: (A → B) → ((false → C) → D),
-    show ((D → A) → (E → (F → A))), from 
-    (assume h2: (D → A), show  (E → (F → A)), from 
-    (assume h3: E, show (F → A), from 
-    (assume h4: F, show A, from sorry))))
+    (
+        assume h1: (A → B) → ((false → C) → D),
+        show (D → A) → (E → (F → A)), from (
+            assume h2: (D → A), show  (E → (F → A)), from (
+                assume h3: E, show (F → A), from (
+                    assume h4: F,
+                    
+                    have hfalcd : (false → C) → D, from (
+                        have hab : A → B, from (
+                            assume ha : A,
+                            show B, from sorry
+                        ),
+                        show (false → C) → D, from h1 hab
+                    ),
+                    
+                    have hfalc : false → C, from (
+                        assume hfal : false,
+                        show C, from by_contradiction (
+                            assume hnc : ¬ C,
+                            show false, from hfal
+                        )
+                    ),
+                    
+                    have hd : D, from hfalcd hfalc,
 
-
+                    show A, from h2 hd
+                )
+            )
+        )
+    )
 end
 
 section
